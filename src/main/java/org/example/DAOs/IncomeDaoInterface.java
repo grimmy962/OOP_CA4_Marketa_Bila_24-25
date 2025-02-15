@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface IncomeDaoInterface {
+    List<Income> getAllIncomes() throws DaoException;
    /*  List<Income> getAllIncome() throws DaoException;
    double getTotalEarned() throws SQLException;
     void addIncome(int incomeD, String title, double amount, Date dateEarned);

@@ -3,6 +3,7 @@ package org.example.BusinessObjects;
 import org.example.DAOs.MySqlExpenseDao;
 import org.example.DAOs.MySqlIncomeDao;
 import org.example.DTOs.Expense;
+import org.example.DTOs.Income;
 import org.example.Exceptions.DaoException;
 
 import java.time.LocalDate;
@@ -40,12 +41,12 @@ public class AppMain {
             case 1 -> getAllExpenses();
             case 2-> addExpense();
             case 3 -> deleteExpense();
-            /*case 4-> getAllIncomes();
-            case 5-> addIncome();
+            case 4-> getAllIncomes();
+            /*case 5-> addIncome();
             case 6 -> deleteIncome();
             case 7 -> getBudgetMyMonth();
             */
-            case 4-> {
+            case 5-> {
                 System.out.println("Finished");
                 return;
             }
@@ -110,4 +111,20 @@ public class AppMain {
             throw new RuntimeException(e);
         }
     }
+
+    private void getAllIncomes(){
+        try {
+            List<Income> incomes = incomeDAO.getAllIncomes();
+
+            if (incomes.isEmpty()) {
+                System.out.println("No expenses");
+            } else {
+                incomes.forEach(System.out::println);
+            }
+        } catch (DaoException e) {
+            System.out.println("Error: " + e.getMessage());
+            
+        }
+    }
+
 }
