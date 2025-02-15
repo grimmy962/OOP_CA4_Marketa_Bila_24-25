@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,22 +37,61 @@ public class MySqlIncomeDao extends MySqlDao implements IncomeDaoInterface {
         }
         return incomes;
     }
-/*
     @Override
-    public double getTotalEarned() throws SQLException {
-        return 0;
+    public double getTotalEarned() throws DaoException {
+        String query = "SELECT SUM(amount) FROM incomes";
+        double totalGained = 0;
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                ResultSet resultSet = preparedStatement.executeQuery();
+        ) {
+            if (resultSet.next()) {
+                totalGained = resultSet.getDouble(1);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error calculating total gained: " + e.getMessage());
+        }
+        return totalGained;
     }
 
     @Override
-    public void addIncome(int incomeD, String title, double amount, Date dateEarned) {
+    public void addIncome(int id, String title, double amount, LocalDate dateEarned) throws DaoException{
+        String query = "INSERT INTO incomes (incomeID, title, amount, dateEarned) VALUES (?, ?, ?, ?)";
 
+        try (
+                Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, title);
+            preparedStatement.setDouble(3, amount);
+            preparedStatement.setDate(4, java.sql.Date.valueOf(dateEarned));
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Income was added");
+            } else {
+                System.out.println("Failed to add the income");
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error adding income: " + e.getMessage());
+        }
     }
 
     @Override
-    public boolean deleteIncome(int incomeID) {
-        return false;
+    public boolean deleteIncome(int incomeID) throws DaoException{
+        String query = "DELETE FROM incomes WHERE incomeID = ?";
+        try (
+                Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);) {
+            preparedStatement.setInt(1, incomeID);
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
-
-    */
 
 }

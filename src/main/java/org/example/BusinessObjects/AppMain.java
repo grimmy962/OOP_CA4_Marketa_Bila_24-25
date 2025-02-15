@@ -30,8 +30,10 @@ public class AppMain {
         System.out.println("4) View incomes");
         System.out.println("5) Add incomes");
         System.out.println("6) Delete incomes");
-        System.out.println("7) View income and expenses for a specific month");
-        System.out.println("8) EXIT");
+        System.out.println("7) View the total spend");
+        System.out.println("8) View the total gained");
+        System.out.println("9) View income and expenses for a specific month");
+        System.out.println("10) EXIT");
         System.out.println("\n Enter your input: ");
 
         int input = keyboard.nextInt();
@@ -42,11 +44,13 @@ public class AppMain {
             case 2-> addExpense();
             case 3 -> deleteExpense();
             case 4-> getAllIncomes();
-            /*case 5-> addIncome();
-            case 6 -> deleteIncome();
-            case 7 -> getBudgetMyMonth();
+            case 5-> addIncome();
+            /*case 6 -> deleteIncome();
+            case 7 -> getTotalSpend();
+            case 8-> getTotalGained();
+            case 9 -> getBudgetMyMonth();
             */
-            case 5-> {
+            case 6-> {
                 System.out.println("Finished");
                 return;
             }
@@ -123,7 +127,30 @@ public class AppMain {
             }
         } catch (DaoException e) {
             System.out.println("Error: " + e.getMessage());
-            
+
+        }
+    }
+
+    private void addIncome(){
+        System.out.println("Please enter income ID: ");
+        int id = keyboard.nextInt();
+        keyboard.nextLine();
+
+        System.out.println("Please enter the income title: ");
+        String title = keyboard.nextLine();
+
+
+        System.out.println("Please enter the amount: ");
+        double amount = keyboard.nextDouble();
+        keyboard.nextLine();
+
+        System.out.println("Please enter the date (YYYY-MM-DD): ");
+        LocalDate dateIncurred = LocalDate.parse(keyboard.nextLine());
+
+        try {
+            incomeDAO.addIncome(id, title, amount, dateIncurred);
+        } catch (DaoException e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
