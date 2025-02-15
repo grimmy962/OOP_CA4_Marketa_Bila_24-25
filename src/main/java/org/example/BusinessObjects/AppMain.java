@@ -1,20 +1,69 @@
 package org.example.BusinessObjects;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import org.example.DAOs.MySqlExpenseDao;
+import org.example.DAOs.MySqlIncomeDao;
+import org.example.DTOs.Expense;
+import org.example.Exceptions.DaoException;
+
+import java.util.List;
+import java.util.Scanner;
+
 public class AppMain {
+
+    //make main app more like a menu type of thing, where u can ask usesr for input
+private MySqlExpenseDao expenseDAO = new MySqlExpenseDao();
+private MySqlIncomeDao incomeDAO = new MySqlIncomeDao();
+private Scanner keyboard = new Scanner(System.in);
+
     public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        new AppMain().run();
+    }
 
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+    public void run(){
+        System.out.println("Income and Expenses Manager");
+        System.out.println("Menu:");
+        System.out.println("1) View all expenses");
+        System.out.println("2) Add expenses");
+        System.out.println("3) Delete expenses");
+        System.out.println("4) View incomes");
+        System.out.println("5) Add incomes");
+        System.out.println("6) Delete incomes");
+        System.out.println("7) View income and expenses for a specific month");
+        System.out.println("8) EXIT");
+        System.out.println("\n Enter your input: ");
 
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
+        int input = keyboard.nextInt();
+        keyboard.nextLine();
+
+        switch (input){
+            case 1 -> getAllExpenses();
+           /* case 2-> addExpense();
+            case 3 -> deleteExpense();
+            case 4-> getAllIncomes();
+            case 5-> addIncome();
+            case 6 -> deleteIncome();
+            case 7 -> getBudgetMyMonth();
+            */case 2 -> {
+                System.out.println("Finished");
+                return;
+            }
+            default -> System.out.println("Invalid input");
         }
     }
+
+private void getAllExpenses(){
+    try{
+        List<Expense> expenses = expenseDAO.getAllExpenses();
+
+        if(expenses.isEmpty()){
+            System.out.println("No expenses");
+        }
+        else{
+            expenses.forEach(System.out::println);
+        }
+    } catch (DaoException e) {
+        System.out.println("Error: " + e.getMessage());;
+    }
 }
-//
+
+}

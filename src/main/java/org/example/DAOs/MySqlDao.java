@@ -7,20 +7,21 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MySqlDao {
-    public Connection getConnection() throws DaoException {
-        String driver = "com.sql.cj.jdbc.Driver";
-        String url = "jdbc:msql://localhost:3306/user_database";
-        String username = "root";
-        String password = "";
-        Connection connection = null;
 
+    String driver = "com.mysql.cj.jdbc.Driver";
+    String url = "jdbc:mysql://localhost:3306/budget_database";
+    String username = "root";
+    String password = "";
+
+    public Connection getConnection() throws DaoException {
+        Connection connection = null;
         try {
             Class.forName(driver);
             connection = DriverManager.getConnection(url, username, password);
         } catch (ClassNotFoundException e) {
-            System.out.println("Failed to find driver class " + e.getMessage());
+            throw new DaoException("Database driver not found: " + e.getMessage());
         } catch (SQLException e) {
-            System.out.println("Connection failed: " + e.getMessage());
+            throw new DaoException("Connection failed: " + e.getMessage());
         }
         return connection;
     }
@@ -29,10 +30,9 @@ public class MySqlDao {
         try {
             if (connection != null) {
                 connection.close();
-                connection = null;
             }
         } catch (SQLException e) {
-            System.out.println("Failed to free connection: " + e.getMessage());
+            throw new DaoException("Failed to free connection: " + e.getMessage());
         }
     }
 }

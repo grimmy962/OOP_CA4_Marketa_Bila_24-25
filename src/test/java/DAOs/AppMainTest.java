@@ -7,3 +7,5 @@ public class AppMainTest {
     @Test
     public void shouldAnswerWithTrue(){assertTrue(true);}
 }
+
+//make this class more like the AppMain class from JUNIT TEST exercise
