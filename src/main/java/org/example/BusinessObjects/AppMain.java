@@ -5,6 +5,7 @@ import org.example.DAOs.MySqlIncomeDao;
 import org.example.DTOs.Expense;
 import org.example.Exceptions.DaoException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
@@ -64,6 +65,30 @@ private void getAllExpenses(){
     } catch (DaoException e) {
         System.out.println("Error: " + e.getMessage());;
     }
-}
 
+    private void addExpense() {
+        System.out.println("Please enter expense ID: ");
+        int id = keyboard.nextInt();
+        keyboard.nextLine();
+
+        System.out.println("Please enter the expense title: ");
+        String title = keyboard.nextLine();
+
+        System.out.println("Please enter the expense category: ");
+        String category = keyboard.nextLine();
+
+        System.out.println("Please enter the amount: ");
+        double amount = keyboard.nextDouble();
+        keyboard.nextLine();
+
+        System.out.println("Please enter the date (YYYY-MM-DD): ");
+        LocalDate dateIncurred = LocalDate.parse(keyboard.nextLine());
+
+        try {
+            expenseDAO.addExpense(id, title, category, amount, dateIncurred);
+            System.out.println("Expense successfully added.");
+        } catch (DaoException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 }
