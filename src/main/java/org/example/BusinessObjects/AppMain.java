@@ -45,12 +45,12 @@ public class AppMain {
             case 3 -> deleteExpense();
             case 4-> getAllIncomes();
             case 5-> addIncome();
-            /*case 6 -> deleteIncome();
-            case 7 -> getTotalSpend();
+            case 6 -> deleteIncome();
+            /*case 7 -> getTotalSpend();
             case 8-> getTotalGained();
             case 9 -> getBudgetMyMonth();
             */
-            case 6-> {
+            case 7-> {
                 System.out.println("Finished");
                 return;
             }
@@ -153,5 +153,20 @@ public class AppMain {
             System.out.println("Error: " + e.getMessage());
         }
     }
+    private void deleteIncome(){
+        System.out.println("Please enter the income ID to income: ");
+        int incomeID = keyboard.nextInt();
 
+        try{
+            boolean itWorks = incomeDAO.deleteIncome(incomeID);
+            if(itWorks){
+                System.out.println("Income was deleted successfully");
+            }
+            else{
+                System.out.println("No income was found");
+            }
+        } catch (DaoException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
