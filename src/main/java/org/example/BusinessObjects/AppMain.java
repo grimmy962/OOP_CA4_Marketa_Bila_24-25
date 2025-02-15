@@ -12,9 +12,9 @@ import java.util.Scanner;
 public class AppMain {
 
     //make main app more like a menu type of thing, where u can ask usesr for input
-private MySqlExpenseDao expenseDAO = new MySqlExpenseDao();
-private MySqlIncomeDao incomeDAO = new MySqlIncomeDao();
-private Scanner keyboard = new Scanner(System.in);
+    private MySqlExpenseDao expenseDAO = new MySqlExpenseDao();
+    private MySqlIncomeDao incomeDAO = new MySqlIncomeDao();
+    private Scanner keyboard = new Scanner(System.in);
 
     public static void main(String[] args) {
         new AppMain().run();
@@ -38,13 +38,14 @@ private Scanner keyboard = new Scanner(System.in);
 
         switch (input){
             case 1 -> getAllExpenses();
-           /* case 2-> addExpense();
+            case 2-> addExpense();
             case 3 -> deleteExpense();
-            case 4-> getAllIncomes();
+            /*case 4-> getAllIncomes();
             case 5-> addIncome();
             case 6 -> deleteIncome();
             case 7 -> getBudgetMyMonth();
-            */case 2 -> {
+            */
+            case 4-> {
                 System.out.println("Finished");
                 return;
             }
@@ -52,18 +53,19 @@ private Scanner keyboard = new Scanner(System.in);
         }
     }
 
-private void getAllExpenses(){
-    try{
-        List<Expense> expenses = expenseDAO.getAllExpenses();
+    private void getAllExpenses() {
+        try {
+            List<Expense> expenses = expenseDAO.getAllExpenses();
 
-        if(expenses.isEmpty()){
-            System.out.println("No expenses");
+            if (expenses.isEmpty()) {
+                System.out.println("No expenses");
+            } else {
+                expenses.forEach(System.out::println);
+            }
+        } catch (DaoException e) {
+            System.out.println("Error: " + e.getMessage());
+            ;
         }
-        else{
-            expenses.forEach(System.out::println);
-        }
-    } catch (DaoException e) {
-        System.out.println("Error: " + e.getMessage());;
     }
 
     private void addExpense() {
@@ -89,6 +91,23 @@ private void getAllExpenses(){
             System.out.println("Expense successfully added.");
         } catch (DaoException e) {
             System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    private void deleteExpense(){
+        System.out.println("Please enter the expense ID to delete: ");
+        int expenseID = keyboard.nextInt();
+
+        try{
+            boolean itWorks = expenseDAO.deleteExpense(expenseID);
+            if(itWorks){
+                System.out.println("Expense was deleted successfully");
+            }
+            else{
+                System.out.println("No expense was found");
+            }
+        } catch (DaoException e) {
+            throw new RuntimeException(e);
         }
     }
 }

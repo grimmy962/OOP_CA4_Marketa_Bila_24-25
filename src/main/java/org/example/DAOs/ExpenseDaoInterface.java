@@ -15,9 +15,7 @@ public interface ExpenseDaoInterface {
 
     void addExpense(int expenseID, String title, String category, double amount, LocalDate dateIncurred) throws DaoException;
 
-/*
-    void addExpense(int expenseID, String title, String category, double amount, Date dateIncurred) throws DaoException;
     boolean deleteExpense(int expenseID) throws DaoException;
-*/
+
 }
 

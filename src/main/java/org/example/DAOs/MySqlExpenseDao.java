@@ -81,13 +81,17 @@ public class MySqlExpenseDao extends MySqlDao implements ExpenseDaoInterface {
             throw new DaoException("Error adding expense: " + e.getMessage());
         }
     }
-}
-/*
+
     @Override
-    public boolean deleteExpense(int expenseID) throws DaoException{
-        return false;
+    public boolean deleteExpense(int expenseID) throws DaoException {
+        String query = "DELETE FROM expenses WHERE expenseID = ?";
+        try (
+                Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);) {
+            preparedStatement.setInt(1, expenseID);
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
-
-
- */
-
+}
