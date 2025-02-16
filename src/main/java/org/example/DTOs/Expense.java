@@ -7,14 +7,14 @@ public class Expense {
     private String title;
     private String category;
     private double amount;
-    private LocalDate date;
+    private LocalDate dateIncurred;
 
-    public Expense(int expenseId, String title, String category, double amount, LocalDate date) {
+    public Expense(int expenseId, String title, String category, double amount, LocalDate dateIncurred) {
         this.expenseId = expenseId;
         this.title = title;
         this.category = category;
         this.amount = amount;
-        this.date = date;
+        this.dateIncurred = dateIncurred;
     }
 
     public Expense() {
@@ -53,11 +53,11 @@ public class Expense {
     }
 
     public LocalDate getDate() {
-        return date;
+        return dateIncurred;
     }
 
     public void setDate(LocalDate date) {
-        this.date = date;
+        this.dateIncurred = date;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class Expense {
                 ", title='" + title + '\'' +
                 ", category='" + category + '\'' +
                 ", amount=" + amount +
-                ", date=" + date +
+                ", date=" + dateIncurred +
                 '}';
     }
 }

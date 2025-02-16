@@ -17,4 +17,5 @@ public interface IncomeDaoInterface {
 
     boolean deleteIncome(int incomeID) throws DaoException;
 
+    double getTotalIncomeByMonth(int mont, int year) throws DaoException;
 }

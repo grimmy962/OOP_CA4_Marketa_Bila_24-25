@@ -21,40 +21,41 @@ public class AppMain {
         new AppMain().run();
     }
 
-    public void run(){
-        System.out.println("Income and Expenses Manager");
-        System.out.println("Menu:");
-        System.out.println("1) View all expenses");
-        System.out.println("2) Add expenses");
-        System.out.println("3) Delete expenses");
-        System.out.println("4) View incomes");
-        System.out.println("5) Add incomes");
-        System.out.println("6) Delete incomes");
-        System.out.println("7) View the total spend");
-        System.out.println("8) View the total gained");
-        System.out.println("9) View income and expenses for a specific month");
-        System.out.println("10) EXIT");
-        System.out.println("\n Enter your input: ");
+    public void run() {
+        while (true) {
+            System.out.println("Income and Expenses Manager");
+            System.out.println("Menu:");
+            System.out.println("1) View all expenses");
+            System.out.println("2) Add expenses");
+            System.out.println("3) Delete expenses");
+            System.out.println("4) View incomes");
+            System.out.println("5) Add incomes");
+            System.out.println("6) Delete incomes");
+            System.out.println("7) View the total spend");
+            System.out.println("8) View the total gained");
+            System.out.println("9) View income and expenses for a specific month");
+            System.out.println("10) EXIT");
+            System.out.println("\n Enter your input: ");
 
-        int input = keyboard.nextInt();
-        keyboard.nextLine();
+            int input = keyboard.nextInt();
+            keyboard.nextLine();
 
-        switch (input){
-            case 1 -> getAllExpenses();
-            case 2-> addExpense();
-            case 3 -> deleteExpense();
-            case 4-> getAllIncomes();
-            case 5-> addIncome();
-            case 6 -> deleteIncome();
-            case 7 -> getTotalSpend();
-            case 8-> getTotalGained();
-            /*case 9 -> getBudgetMyMonth();
-            */
-            case 9-> {
-                System.out.println("Finished");
-                return;
+            switch (input) {
+                case 1 -> getAllExpenses();
+                case 2 -> addExpense();
+                case 3 -> deleteExpense();
+                case 4 -> getAllIncomes();
+                case 5 -> addIncome();
+                case 6 -> deleteIncome();
+                case 7 -> getTotalSpend();
+                case 8 -> getTotalGained();
+                case 9 -> getBudgetByMonth();
+                case 10 -> {
+                    System.out.println("Finished");
+                    return;
+                }
+                default -> System.out.println("Invalid input");
             }
-            default -> System.out.println("Invalid input");
         }
     }
 
@@ -186,5 +187,27 @@ public class AppMain {
         } catch (DaoException e) {
             System.out.println("Error: "+e.getMessage());
         }
+    }
+
+    private void getBudgetByMonth(){
+        System.out.println("Please enter the year YYYY: ");
+        int year = keyboard.nextInt();
+        keyboard.nextLine();
+        System.out.println("Please enter the month MM: ");
+        int month = keyboard.nextInt();
+        keyboard.nextLine();
+
+        try{
+            double totalIncome = incomeDAO.getTotalIncomeByMonth(year, month);
+            double totalExpense = expenseDAO.getTotalExpenseByMonth(year, month);
+            double budget = totalIncome - totalExpense;
+
+            System.out.println("Summary of a budget for "+year+"-"+ String.format("%02d", month) + ":");
+            System.out.println("Total earned: "+totalIncome);
+            System.out.println("Total spend: "+totalExpense);
+            System.out.println("Balance left: "+budget+"\n");
+        } catch (DaoException e) {
+            System.out.println("Error: "+e.getMessage());
+            }
     }
 }
