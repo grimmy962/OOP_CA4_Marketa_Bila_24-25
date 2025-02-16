@@ -16,9 +16,5 @@ public interface IncomeDaoInterface {
     void addIncome(int id, String title, double amount, LocalDate dateEarned) throws DaoException;
 
     boolean deleteIncome(int incomeID) throws DaoException;
-   /*
-    void addIncome(int incomeD, String title, double amount, Date dateEarned);
-    boolean deleteIncome(int incomeID);
 
-    */
 }

@@ -46,11 +46,11 @@ public class AppMain {
             case 4-> getAllIncomes();
             case 5-> addIncome();
             case 6 -> deleteIncome();
-            /*case 7 -> getTotalSpend();
-            case 8-> getTotalGained();
+            case 7 -> getTotalSpend();
+            /*case 8-> getTotalGained();
             case 9 -> getBudgetMyMonth();
             */
-            case 7-> {
+            case 8-> {
                 System.out.println("Finished");
                 return;
             }
@@ -167,6 +167,15 @@ public class AppMain {
             }
         } catch (DaoException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void getTotalSpend(){
+        try{
+            double totalExpenses = expenseDAO.getTotalSpend();
+            System.out.println("Total Spent: "+totalExpenses);
+        } catch (DaoException e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }
