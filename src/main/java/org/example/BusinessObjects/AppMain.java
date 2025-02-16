@@ -189,6 +189,7 @@ public class AppMain {
         }
     }
 
+    //could also add code to let the user know that there is no record of income for this month
     private void getBudgetByMonth(){
         System.out.println("Please enter the year YYYY: ");
         int year = keyboard.nextInt();
